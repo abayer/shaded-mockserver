@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <groupId>com.andrewbayer</groupId>
+    <artifactId>shaded-mockserver</artifactId>
+    <version>0.0.1-${mock-server.version}</version>
+    <packaging>jar</packaging>
+    <properties>
+        <mock-server.version>5.11.1</mock-server.version>
+    </properties>
+    <name>Shaded MockServer</name>
+
+    <distributionManagement>
+        <repository>
+            <id>bintray-abayer-shaded-mockserver</id>
+            <name>abayer-shaded-mockserver</name>
+            <url>https://api.bintray.com/maven/abayer/shaded-mockserver/shaded-mockserver/;publish=1</url>
+        </repository>
+    </distributionManagement>
+
+    <dependencies>
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-client-java</artifactId>
+            <version>${mock-server.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.mock-server</groupId>
+            <artifactId>mockserver-junit-rule</artifactId>
+            <version>${mock-server.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+                <configuration>
+                    <createSourcesJar>true</createSourcesJar>
+                    <relocations>
+                        <relocation>
+                            <pattern>com.google.common</pattern>
+                            <shadedPattern>shaded.com.google.common</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>javax.servlet</pattern>
+                            <shadedPattern>shaded.javax.servlet</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>joptsimple</pattern>
+                            <shadedPattern>shaded.joptsimple</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>org.objectweb.asm</pattern>
+                            <shadedPattern>shaded.org.objectweb.asm</shadedPattern>
+                        </relocation>
+                    </relocations>
+                    <artifactSet>
+                        <includes>
+                            <include>*:*</include>
+                        </includes>
+                    </artifactSet>
+                </configuration>
+            </plugin>
+        </plugins>
+    </build>
+</project>
