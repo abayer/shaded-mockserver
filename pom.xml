@@ -4,7 +4,7 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.andrewbayer</groupId>
     <artifactId>shaded-mockserver</artifactId>
-    <version>0.0.1-${mock-server.version}</version>
+    <version>0.0.2-${mock-server.version}</version>
     <packaging>jar</packaging>
     <properties>
         <mock-server.version>5.11.1</mock-server.version>
@@ -64,6 +64,10 @@
                         <relocation>
                             <pattern>org.objectweb.asm</pattern>
                             <shadedPattern>shaded.org.objectweb.asm</shadedPattern>
+                        </relocation>
+                        <relocation>
+                            <pattern>com.github.fge</pattern>
+                            <shadedPattern>shaded.com.github.fge</shadedPattern>
                         </relocation>
                     </relocations>
                     <artifactSet>
